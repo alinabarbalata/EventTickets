@@ -3,6 +3,7 @@
 #include <ctime>
 #include <string>
 #include <sstream>
+#include "Exception.h"
 using namespace std;
 
 class Birthday {
@@ -22,19 +23,19 @@ public:
 	}
 	void setDay(int day) {
 		if (day < 1 || day>32) {
-			throw exception ("The day is inexistent!");
+			throw new CustomException ("Invalid day!");
 		}
 		this->day = day;
 	}
 	void setMonth(int month) {
 		if (month < 1 || month>12) {
-			throw exception("The month is inexistent!");
+			throw new CustomException("Invalid month!");
 		}
 		this->month = month;
 	}
 	void setYear(int year) {
 		if (year > (getCurrentYear() - 18) || year < (getCurrentYear() - 100)) {
-			throw exception("Invalid year!");
+			throw new CustomException("Invalid year!");
 		}
 		this->year = year;
 	}
