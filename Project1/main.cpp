@@ -24,4 +24,13 @@ void main() {
 	Person p1("Andreea", "Alexandra", 1, 3, 2002);
 	cout<<p1.getBirthday()<<endl;
 	cout << p1.getFullName()<<endl;
+	p1.printInfo();
+
+	//Tester for ostream operator implementation
+	cout << p1;
+
+	//Tester for constructor with phone number parameter
+	Person p2("Alina", "X", "0745670009", 6, 8, 2003);
+	p2.printInfo();
+	//Person p3("Alexandru", "Y", "054598498989", 5, 4, 2000);//phone number is too long
 }
