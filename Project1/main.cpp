@@ -33,4 +33,5 @@ void main() {
 	Person p2("Alina", "X", "0745670009", 6, 8, 2003);
 	p2.printInfo();
 	//Person p3("Alexandru", "Y", "054598498989", 5, 4, 2000);//phone number is too long
+
 }
