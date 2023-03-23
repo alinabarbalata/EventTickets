@@ -39,8 +39,8 @@ public:
 		}//insertion of idPerson's digits into an array
 
 		delete[] this->idTicket;
-		//this->idTicket = new char[idPerson_length + COUNTER_length + 1];//1+2+1=4
-		this->idTicket = new char[4];
+		this->idTicket = new char[idPerson_length + COUNTER_length + 1];//1+2+1=4
+		
 		//Insertion of idPerson characters
 		int i = 0;
 		while (i < idPerson_length) {
@@ -49,7 +49,7 @@ public:
 		}
 		i = idPerson_length;
 		int j = 0;
-		//~~~~~~~~~~~~~~~~~~~//
+
 		while (i < (COUNTER_length+idPerson_length) && j < COUNTER_length) {
 			this->idTicket[i] = intToChar(COUNTER_digits[j]);
 			i++;
