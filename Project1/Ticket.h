@@ -6,10 +6,14 @@ using namespace std;
 enum TicketType {A,B,C,VIP};
 class Ticket {
 	char* idTicket = nullptr;
+	int something;
 public:
 	static int COUNTER;
 public:
-	void idGenerator(int* idPerson, int idPerson_length, TicketType type) {
+	Ticket(int something) {
+		this->something = something;
+	}
+	char* idGenerator(int idPerson, TicketType type) {
 		int COUNTER_length = countDigits(Ticket::COUNTER);//n=2
 		int copy_COUNTER_length = COUNTER_length;
 		int copy_COUNTER = Ticket::COUNTER;
@@ -23,27 +27,51 @@ public:
 
 		//idPerson=5, COUNTER=20, type=VIP
 		//id=520*
-		delete[] this->idTicket;
-		this->idTicket = new char[idPerson_length + COUNTER_length + 1 + 1];//1+2+1+1=5
+		int idPerson_length = countDigits(idPerson);
+		int copy_idPerson_length = idPerson_length;
+		int copyIdPerson = idPerson;
+		int* idPerson_digits = nullptr;
+		idPerson_digits = new int[idPerson_length];
+		while (copyIdPerson) {
+			idPerson_digits[copy_idPerson_length - 1] = copyIdPerson % 10;//array[1]=0,array[0]=2
+			copyIdPerson /= 10;
+			copy_idPerson_length--;//n=1,n=0
+		}//insertion of idPerson's digits into an array
 
+		delete[] this->idTicket;
+		//this->idTicket = new char[idPerson_length + COUNTER_length + 1];//1+2+1=4
+		this->idTicket = new char[4];
 		//Insertion of idPerson characters
-		for (int i = 0; i < idPerson_length; i++) {
-			this->idTicket[i] = intToChar(idPerson[i]);//added int as char into attribute idTicket
-		}//idTicket[0]=5
-		int i = idPerson_length;
+		int i = 0;
+		while (i < idPerson_length) {
+			this->idTicket[i] = intToChar(idPerson_digits[i]);
+			i++;
+		}
+		i = idPerson_length;
 		int j = 0;
 		//~~~~~~~~~~~~~~~~~~~//
-		/*while(i<COUNTER_length && j<)
-		for (int i = idPerson_length; i < COUNTER_length; i++) {
-			this->idTicket[i]=intToChar(COUNTER)
-		}*/
+		while (i < (COUNTER_length+idPerson_length) && j < COUNTER_length) {
+			this->idTicket[i] = intToChar(COUNTER_digits[j]);
+			i++;
+			j++;
+		}
+		if (type == VIP) {
+			this->idTicket[idPerson_length + COUNTER_length] = '*';
+		}
+		else
+			this->idTicket[idPerson_length + COUNTER_length] = intToChar(type);
+
+		this->idTicket[idPerson_length+COUNTER_length+1] = '\0';
+		return this->idTicket;
 	}
 
+	
 	static char intToChar(int value) {
 		string t = to_string(value);
 		char const* n_char = t.c_str();
-		cout << n_char;
+		return *n_char;
 	}
+
 	static int countDigits(int smth) {
 		int n = 0;
 		while (smth) {

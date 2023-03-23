@@ -3,6 +3,7 @@
 #include <ctime>
 #include "Person.h";
 #include "Exception.h";
+#include "Ticket.h";
 using namespace std;
 
 void main() {
@@ -33,5 +34,8 @@ void main() {
 	Person p2("Alina", "X", "0745670009", 6, 8, 2003);
 	p2.printInfo();
 	//Person p3("Alexandru", "Y", "054598498989", 5, 4, 2000);//phone number is too long
+
+	Ticket t1(1);
+	cout<<t1.idGenerator(140, VIP);
 
 }
