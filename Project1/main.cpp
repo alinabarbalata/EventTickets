@@ -4,6 +4,7 @@
 #include "Person.h";
 #include "Exception.h";
 #include "Ticket.h";
+#include "Date.h"
 using namespace std;
 
 void main() {
@@ -19,7 +20,7 @@ void main() {
 	}
 	//Birthday b3(1, 15, 2003);//does not work because variable month does not verify condition
 	//Birthday b4(1, 12, 2006);//does not work because variable year does not verify condition
-	cout << b1.getBirthday_string()<<endl;
+	cout << b1.getDate_string()<<endl;
 
 	//Tester for Person class
 	Person p1("Andreea", "Alexandra", 1, 3, 2002);

@@ -4,66 +4,9 @@
 #include <string>
 #include <sstream>
 #include "Exception.h"
+#include "Date.h"
 using namespace std;
 
-class Birthday {
-	int day;
-	int month;
-	int year;
-public:
-	Birthday() {
-		this->day = 1;
-		this->month = 1;
-		this->year = getCurrentYear() - 18;
-	}
-	Birthday(int day, int month, int year) {
-		setDay(day);
-		setMonth(month);
-		setYear(year);
-	}
-	void setDay(int day) {
-		if (day < 1 || day>32) {
-			throw new CustomException ("Invalid day!");
-		}
-		this->day = day;
-	}
-	void setMonth(int month) {
-		if (month < 1 || month>12) {
-			throw new CustomException("Invalid month!");
-		}
-		this->month = month;
-	}
-	void setYear(int year) {
-		if (year > (getCurrentYear() - 18) || year < (getCurrentYear() - 100)) {
-			throw new CustomException("Invalid year!");
-		}
-		this->year = year;
-	}
-	int getDay() {
-		return this->day;
-	}
-	int getMonth() {
-		return this->month;
-	}
-	int getYear() {
-		return this->year;
-	}
-	string getBirthday_string() {
-		return to_string(this->day) + "-" + to_string(this->month) + "-" + to_string(this->year);
-	}
-
-	static int getCurrentYear() {
-		time_t now = time(0);
-		tm* ltm = localtime(&now);
-		return (1900 + ltm->tm_year);
-	}
-	/*static string intToString(int int_var) {
-		stringstream stream;
-		stream >> int_var;
-		string string_var;
-		stream << string_var;
-	}*/
-};
 class Person {
 	int idPerson;
 	string first_name;
@@ -92,7 +35,7 @@ public:
 		return this->first_name+" "+last_name;
 	}
 	string getBirthday() {
-		return this->dateOfBirth.getBirthday_string();
+		return this->dateOfBirth.getDate_string();
 	}
 	~Person() {
 		COUNTER--;
@@ -111,7 +54,7 @@ public:
 	void printInfo() {
 		cout << endl << "Id: " << this->idPerson;
 		cout << endl << "Full name: " << this->first_name<<" "<<this->last_name;
-		cout << endl << "Birthday: " << this->dateOfBirth.getBirthday_string();
+		cout << endl << "Birthday: " << this->dateOfBirth.getDate_string();
 		cout << endl << "Phone number: " << this->phoneNumber;
 		cout << endl;
 	}

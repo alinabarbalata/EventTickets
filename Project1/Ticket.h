@@ -1,17 +1,19 @@
 #pragma once
 #include <iostream>
 #include <String>
+#include "Person.h";
 using namespace std;
 
 enum TicketType {A,B,C,VIP};
 class Ticket {
 	char* idTicket = nullptr;
-	int something;
+	char* namePerson = nullptr;
+
 public:
 	static int COUNTER;
 public:
-	Ticket(int something) {
-		this->something = something;
+	Ticket(int smth) {
+		
 	}
 	char* idGenerator(int idPerson, TicketType type) {
 		int COUNTER_length = countDigits(Ticket::COUNTER);//n=2
