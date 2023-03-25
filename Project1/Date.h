@@ -31,6 +31,9 @@ public:
     }
     int getDay() { return this->day; }
     int getMonth() { return this->month; }
+
+    virtual void setYear() {}
+    
      string getDate_string() {
          return to_string(this->day) + "-" + to_string(this->month);
      }
@@ -63,7 +66,7 @@ public:
         setMonth(month);
         setYear(year);
     }
-    void setYear(int year) {
+    virtual void setYear(int year) {
         if (year > (getCurrentYear() - 18) || year < (getCurrentYear() - 100)) {
             throw new CustomException("Invalid year!");
         }
@@ -87,7 +90,7 @@ public:
         setMonth(month);
         setYear(year);
     }
-    void setYear(int year) {
+    virtual void setYear(int year) {
         if (year < getCurrentYear()) {
             throw new CustomException("Invalid year of event!");
         }
@@ -95,3 +98,12 @@ public:
     }
     int getYear() { return this->year; }
 };
+
+ostream& operator<<(ostream& out, Birthday date) {
+    out << date.getDay() << "-" << date.getMonth() << "-" << date.getYear();
+    return out;
+}
+ostream& operator<<(ostream& out, EventDate date) {
+    out << date.getDay() << "-" << date.getMonth() << "-" << date.getYear();
+    return out;
+}

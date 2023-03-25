@@ -2,18 +2,27 @@
 #include <iostream>
 #include <String>
 #include "Person.h";
+#include <cctype>
 using namespace std;
 
 enum TicketType {A,B,C,VIP};
 class Ticket {
 	char* idTicket = nullptr;
-	char* namePerson = nullptr;
-
+	string namePerson;
+	EventDate date;
+	char time[6] = "-";
+	TicketType type;
 public:
 	static int COUNTER;
+	static int MIN_CHAR;
+	static int MAX_CHAR;
 public:
-	Ticket(int smth) {
-		
+	Ticket(int idPerson, string namePerson,const char* time,int day,int month, int year,TicketType type) {
+		idGenerator(idPerson, type);
+		setTime(time);
+		setName(namePerson);
+		this->date=EventDate(day, month, year);
+		setType(type);
 	}
 	char* idGenerator(int idPerson, TicketType type) {
 		int COUNTER_length = countDigits(Ticket::COUNTER);//n=2
@@ -67,7 +76,6 @@ public:
 		return this->idTicket;
 	}
 
-	
 	static char intToChar(int value) {
 		string t = to_string(value);
 		char const* n_char = t.c_str();
@@ -82,5 +90,83 @@ public:
 		}
 		return n;
 	}
+
+	void setTime(const char* time) {//"08:20"
+		if (strlen(time) != 5)
+			throw new CustomException("Invalid length for time!");
+		int i = 0;
+		while (i < strlen(time)) {
+			if (i == 2) {
+				if (time[i] != ':')
+					throw new CustomException("Invalid time format!");
+			}
+			else
+			if (i != 2) {
+				if (isdigit(time[i]) == 0)
+					throw new CustomException("Invalid time format!");
+			}
+			i++;
+		}
+		strcpy(this->time, time);
+	}
+
+	void setName(string namePerson) {
+		if (countStringCharacters(namePerson) < MIN_CHAR || countStringCharacters(namePerson) > MAX_CHAR)
+			throw new CustomException("Invalid name size.");
+		this->namePerson = namePerson;
+	}
+
+	void setType(TicketType type) {
+		this->type = type;
+	}
+	static int countStringCharacters(string string) {
+		int count = 0;
+		for (int i = 0; i < string.size(); i++)
+			count++;
+		return count;
+	}
+
+	string getName() {
+		return this->namePerson;
+	}
+	EventDate getDate() {
+		return this->date;
+	}
+	char* getId() {
+		char* copy = new char[strlen(this->idTicket) + 1];
+		strcpy(copy, idTicket);
+		return copy;
+	}
+	char* getTime() {
+		return this->time;
+	}
+	string getType() {
+		string result;
+		switch (type) {
+		case 0:
+			result = "A";
+			break;
+		case 1:
+			result = "B";
+			break;
+		case 2:
+			result = "C";
+			break;
+		case 3:
+			result = "VIP";
+			break;
+		}
+		return result;
+	}
 };
 int Ticket::COUNTER = 10;
+int Ticket::MIN_CHAR = 3;
+int Ticket::MAX_CHAR = 20;
+ostream& operator<<(ostream& out, Ticket ticket) {
+	out << endl << "Id ticket: " << ticket.getId();
+	out << endl << "Name Person: " << ticket.getName();
+	out << endl << "Ticket Type: " << ticket.getType();
+	out << endl << "Date event: " << ticket.getDate();
+	out << endl << "Time event: " << ticket.getTime();
+	return out;
+}

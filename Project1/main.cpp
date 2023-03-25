@@ -36,7 +36,18 @@ void main() {
 	p2.printInfo();
 	//Person p3("Alexandru", "Y", "054598498989", 5, 4, 2000);//phone number is too long
 
-	Ticket t1(1);
-	cout<<t1.idGenerator(140, VIP);
+	//Tester for Ticket class
+	/*Ticket t1(1);
+	cout<<t1.idGenerator(140, VIP);*/
+
+	//Tester for setTime
+	//Ticket t2("08:20");//works
+	//Ticket t3("0a:20");//does not work
+	//Ticket t4("01020");//does not work
+	//Ticket t5("08:200");//does not work
+	Ticket t6(120,"Gabriela Valentin", "08:20",1,2,2023,VIP);//works
+	//Ticket t7("Gabriela Valentinnnnnnnnnnnnnnnnnnn", "08:20");//does not work
+	cout <<endl<< t6.getName() << " "<<t6.getDate()<<" "<<t6.getId()<<" "<<t6.getTime()<<endl;
+	cout << t6;
 
 }
