@@ -8,6 +8,7 @@ using namespace std;
 enum TicketType {A,B,C,VIP};
 class Ticket {
 	char* idTicket = nullptr;
+	Person person;
 	string namePerson;
 	EventDate date;
 	char time[6] = "-";
@@ -17,12 +18,14 @@ public:
 	static int MIN_CHAR;
 	static int MAX_CHAR;
 public:
-	Ticket(int idPerson, string namePerson,const char* time,int day,int month, int year,TicketType type) {
-		idGenerator(idPerson, type);
+	Ticket(Person person, const char* time,int day,int month, int year,TicketType type) {
+		this->person = person;
+		idGenerator(person.Person::getId(), type);
 		setTime(time);
-		setName(namePerson);
+		setName(person.Person::getFullName());
 		this->date=EventDate(day, month, year);
 		setType(type);
+		COUNTER += 10;
 	}
 	char* idGenerator(int idPerson, TicketType type) {
 		int COUNTER_length = countDigits(Ticket::COUNTER);//n=2
@@ -163,6 +166,7 @@ int Ticket::COUNTER = 10;
 int Ticket::MIN_CHAR = 3;
 int Ticket::MAX_CHAR = 20;
 ostream& operator<<(ostream& out, Ticket ticket) {
+	out << endl;
 	out << endl << "Id ticket: " << ticket.getId();
 	out << endl << "Name Person: " << ticket.getName();
 	out << endl << "Ticket Type: " << ticket.getType();

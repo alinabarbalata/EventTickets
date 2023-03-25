@@ -45,9 +45,11 @@ void main() {
 	//Ticket t3("0a:20");//does not work
 	//Ticket t4("01020");//does not work
 	//Ticket t5("08:200");//does not work
-	Ticket t6(120,"Gabriela Valentin", "08:20",1,2,2023,VIP);//works
+	//Ticket t6(120,"Gabriela Valentin", "08:20",1,2,2023,VIP);//works
 	//Ticket t7("Gabriela Valentinnnnnnnnnnnnnnnnnnn", "08:20");//does not work
-	cout <<endl<< t6.getName() << " "<<t6.getDate()<<" "<<t6.getId()<<" "<<t6.getTime()<<endl;
-	cout << t6;
+	//cout <<endl<< t6.getName() << " "<<t6.getDate()<<" "<<t6.getId()<<" "<<t6.getTime()<<endl;
+	//cout << t6;
 
+	Ticket t7(p1, "13:20", 20, 7, 2023, VIP);
+	cout << t7;
 }

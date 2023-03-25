@@ -17,6 +17,9 @@ public:
 	static int COUNTER;
 	static int SIZE;
 public:
+	Person() {
+
+	}
 	Person(string first_name, string last_name, int day_birth, int month_birth, int year_birth):first_name(first_name),last_name(last_name) {
 		this->dateOfBirth = Birthday(day_birth, month_birth, year_birth);
 		COUNTER++;
