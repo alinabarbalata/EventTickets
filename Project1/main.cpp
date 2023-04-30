@@ -4,15 +4,16 @@
 #include "Person.h";
 #include "Exception.h";
 #include "Ticket.h";
-#include "Date.h"
+#include "Date.h";
+#include "Event.h";
 using namespace std;
 
 void main() {
 	//Tester for Birthday class
-	Birthday b1(1, 3, 2003);
+	BirthDate b1(1, 3, 2003);
 	cout << b1.getDay() << "." << b1.getMonth() << "." << b1.getYear()<<endl;//works
 	try { 
-		Birthday b2(-1, 12, 2003);//does not work because variable day does not verify condition
+		BirthDate b2(-1, 12, 2003);//does not work because variable day does not verify condition
 	}
 	catch (CustomException* ex) {
 		cout << endl << ex->what();
@@ -24,7 +25,7 @@ void main() {
 
 	//Tester for Person class
 	Person p1("Andreea", "Alexandra", 1, 3, 2002);
-	cout<<p1.getBirthday()<<endl;
+	cout<<p1.getBirthDate()<<endl;
 	cout << p1.getFullName()<<endl;
 	p1.printInfo();
 
@@ -52,4 +53,56 @@ void main() {
 
 	Ticket t7(p1, "13:20", 20, 7, 2023, VIP);
 	cout << t7;
+
+	Person p10("Alexandru", "Radu", 23, 1, 2000);
+	Ticket t10(p10, "15:00", 6, 4, 2024, VIP);
+
+	cout << t10;
+
+	int numberSeats[] = {60,70};
+	float prices[] = { 150,200 };
+	TicketType zones[] = { A,B};
+	string name = "name";
+	char location[] = "Bucharest no 22";
+	Event e1(name,2,numberSeats,prices,location,zones,Movie);
+	cout << endl << e1.getLocation()<<" "<<e1.getType();//works
+	try {
+		e1.setEverthingZonesRelated(2, numberSeats, prices, zones);
+	}
+	catch (CustomException* ex2) {
+		cout << endl << ex2->what();
+		delete ex2;
+	}
+	for (int i = 0; i < 2; i++) {
+		cout << e1.getNoSeatsPerZone()[i] << " ";
+		cout << e1.getZones()[i] << " ";
+		cout << e1.getPricePerZone()[i] << " ";
+	}
+	
+	//int numberSeats2[] = {100,50};
+	//float prices2[] = { 200,210 };
+	//TicketType zones2[] = { A,VIP };
+	//string name2 = "NAMEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE";
+	//char location2[] = "Bucharest";
+	//try {
+	//	Event e2(name2, 2, numberSeats2, prices2, location2, zones2, Football);//invalid name length
+	//}
+	//catch (CustomException* ex3) {
+	//	cout << endl << ex3->what();
+	//	delete ex3;
+	//}
+	
+	int numberSeats2[] = { 100,50 };
+	float prices2[] = { 200,210 };
+	TicketType zones2[] = { A,VIP };
+	string name2 = "NAME";
+	char location2[] = "B";
+	try {
+		Event e2(name2, 2, numberSeats2, prices2, location2, zones2, Football);//invalid location length
+	}
+	catch (CustomException* ex3) {
+		cout << endl << ex3->what();
+		delete ex3;
+	}
+	
 }

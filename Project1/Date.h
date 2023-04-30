@@ -52,16 +52,16 @@ public:
     }*/
 };
 
-class Birthday : public Date {
+class BirthDate : public Date {
 protected:
     int year;
 public:
-    Birthday() {
+    BirthDate() {
         setDay(1);
         setMonth(1);
         setYear(getCurrentYear()-18);
     }
-    Birthday(int day, int month, int year) {
+    BirthDate(int day, int month, int year) {
         setDay(day);
         setMonth(month);
         setYear(year);
@@ -99,7 +99,7 @@ public:
     int getYear() { return this->year; }
 };
 
-ostream& operator<<(ostream& out, Birthday date) {
+ostream& operator<<(ostream& out, BirthDate date) {
     out << date.getDay() << "-" << date.getMonth() << "-" << date.getYear();
     return out;
 }
