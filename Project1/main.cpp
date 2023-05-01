@@ -104,5 +104,46 @@ void main() {
 		cout << endl << ex3->what();
 		delete ex3;
 	}
-	
+	string nameEvent3 = "Harry Styles: On Tour";
+	TicketType zones3[] = { A,B,C,VIP };
+	float prices3[] = { 150,342,450,1200 };
+	int numberSeats3[] = { 3000,4200,4000,200 };
+	char location3[] = "Bucharest National Arena";
+	Event e3(nameEvent3, 4, numberSeats3, prices3, location3, zones3, Concert);
+	cout << endl << e1.getIdEvent();
+	cout << e1 << e3;;
+
+	e1 += 100;
+	for (int i = 0; i < e1.getNoZones(); i++)
+		cout << e1.getPricePerZone()[i]<<" ";
+
+	cout << "\ne1 seats: " << e1.getTotalSeats() << "\ne3 seats: " << e3.getTotalSeats();
+	if (e1 < e3)
+		cout << "\ne1 has less seats than e3";
+	if (e1 > e3)
+		cout << "\ne1 has more seats than e3";
+	if (e1 <= e3)
+		cout << "\ne1 has less or as many seats as e3";
+	if (e1 >= e3)
+		cout << "\ne1 has more or as many seats as e3";
+	if (e1 == e3)
+		cout << "\ne1 has as many seats as e3";
+	if (e1 != e3)
+		cout << "\ne1 has a different number of seats than e3";
+
+	cout << "\ne1 Prices before: ";
+	for (int i = 0; i < e1.getNoZones(); i++)
+		cout<<e1.getPricePerZone()[i] << " ";
+	cout << "\ne3 Prices before: ";
+	for (int i = 0; i < e3.getNoZones(); i++)
+		cout << e3.getPricePerZone()[i] << " ";
+	e3=e1 + 120;
+	cout << "\ne1 Prices after: ";
+	for (int i = 0; i < e1.getNoZones(); i++)
+		cout << e1.getPricePerZone()[i] << " ";
+	cout << "\ne3 Prices after: ";
+	for (int i = 0; i < e3.getNoZones(); i++)
+		cout << e3.getPricePerZone()[i] << " ";
+
+
 }

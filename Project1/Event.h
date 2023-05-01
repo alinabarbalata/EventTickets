@@ -8,6 +8,7 @@ using namespace std;
 
 enum EventType { Movie, Football, Concert, Other };
 class Event {
+	const int idEvent;
 	string nameEvent = "-";
 	int* noSeatsPerZone = nullptr;
 	TicketType* zones = nullptr;
@@ -24,15 +25,17 @@ public:
 	const static float MIN_PRICE;
 	const static float MAX_PRICE;
 	const static int MIN_SEATS_PER_ZONE = 50;
-	const static int MAX_SEATS_PER_ZONE = 100;
+	const static int MAX_SEATS_PER_ZONE = 5000;
 private:
 	static int NO_EVENTS_CREATED;
 public:
-	Event(string nameEvent,int noZones,int* noSeatsPerZone,float* pricePerZone,char* location,TicketType* zones,EventType type) {
+	Event(string nameEvent,int noZones,int* noSeatsPerZone,float* pricePerZone,
+		char* location,TicketType* zones,EventType type):idEvent(NO_EVENTS_CREATED) {
 		setEverthingZonesRelated(noZones, noSeatsPerZone, pricePerZone, zones);
 		setName(nameEvent);
 		setLocation(location);
 		setType(type);
+		NO_EVENTS_CREATED++;
 	}
 	void setEverthingZonesRelated(int noZones, int* noSeatsPerZone, float* pricePerZone, TicketType* zones) {
 		if (noZones<MIN_ZONES || noZones>MAX_ZONES)
@@ -129,6 +132,10 @@ public:
 		return copy;
 	}
 
+	const int getIdEvent() {
+		return idEvent;
+	}
+
 	static string convertorTicketTypeToString(TicketType zone) {
 		string result;
 		if (zone == A)
@@ -149,8 +156,91 @@ public:
 		}
 		return count;
 	}
+
+	int getTotalSeats() {
+		int total = 0;
+		for (int i = 0; i < noZones; i++)
+			total += getNoSeatsPerZone()[i];
+		return total;
+	}
+	~Event() {
+		delete[] location;
+		delete[] noSeatsPerZone;
+		delete[] zones;
+		delete[] pricePerZone;
+		NO_EVENTS_CREATED--;
+	}
+
+	float* operator+=(float value) {
+		float* copy = new float[noZones];
+		for (int i = 0; i < noZones; i++) {
+			pricePerZone[i] += value;
+			copy[i] = pricePerZone[i];
+		}
+		return copy;
+	}
+
+	float* operator+(float value) {
+		float* copy = new float[noZones];
+		for (int i = 0; i < noZones; i++)
+			copy[i] = pricePerZone[i] + value;
+		return copy;
+	}
+
+	void operator=(float* values) {
+		for (int i = 0; i < noZones; i++)
+			pricePerZone[i] = values[i];
+	}
+	bool operator<(Event& event) {
+		if (getTotalSeats() < event.getTotalSeats())
+			return true;
+		return false;
+	}
+	bool operator>(Event& event) {
+		if (getTotalSeats() > event.getTotalSeats())
+			return true;
+		return false;
+	}
+	bool operator<=(Event& event) {
+		if (getTotalSeats() <= event.getTotalSeats())
+			return true;
+		return false;
+	}
+	bool operator>=(Event& event) {
+		if (getTotalSeats() >= event.getTotalSeats())
+			return true;
+		return false;
+	}
+	bool operator==(Event& event) {
+		if (getTotalSeats() == event.getTotalSeats())
+			return true;
+		return false;
+	}
+	bool operator!=(Event& event) {
+		if (getTotalSeats() != event.getTotalSeats())
+			return true;
+		return false;
+	}
 };
-int Event::NO_EVENTS_CREATED = 0;
+int Event::NO_EVENTS_CREATED = 1;
 const float Event:: MIN_PRICE = 100;
 const float Event:: MAX_PRICE = 1500;
 const TicketType Event::array[5] = { A,B,C,VIP };
+
+ostream& operator<<(ostream& out, Event& event) {
+	out << "\nId event: " << event.getIdEvent();
+	out << "\nType: " << event.getType();
+	out << "\nLocation: " << event.getLocation();
+	out << "\nName: " << event.getNameEvent();
+	out << "\nZones: ";
+	for(int i=0;i<event.getNoZones();i++)
+		out << event.getZones()[i]<<" ";
+	out << "\nSeatsPerZone: ";
+	for (int i = 0; i < event.getNoZones(); i++)
+		out << event.getNoSeatsPerZone()[i]<<" ";
+	out << "\nPrices: ";
+	for (int i = 0; i < event.getNoZones(); i++)
+		out << event.getPricePerZone()[i]<<" ";
+	out << endl << endl;
+	return out;
+}
